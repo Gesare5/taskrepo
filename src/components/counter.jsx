@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Buton from "../components/button";
 import Imagge from "../components/imagge";
-import "../styles/counter";
+import "../styles/counter.css";
 
 const Counter = () => {
     const [, setCount] = useState(<Imagge />);
