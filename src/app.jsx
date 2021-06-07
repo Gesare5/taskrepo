@@ -1,24 +1,90 @@
+import React from 'react';
+import Buton from './components/button';
+import List from './components/list';
+import './App.css';
 
-import Imagge from "./components/imagge";
-import Counter from "./components/counter";
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      currentItem: {
+        text: '',
+        key: ''
+      }
 
+    }
+    this.handleInput = this.handleInput.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.setUpdate = this.setUpdate.bind(this);
+  }
 
+  handleInput(e) {
+    this.setState({
+      currentItem: {
+        text: e.target.value,
+        key: Date.now()
+      }
+    })
+  }
+  //function to add item to list
+  addItem(e) {
 
-function App() {
-  return (
-    <>
-      <Imagge src="https://media.cntraveler.com/photos/57fea9ec8584f8cd20e65f15/16:9/w_1600%2Cc_limit/Aerial-One%26OnlyReethiRah-Maldives-CRHotel.jpg" alt="" width="240px" height="120px" />;
+    //to stop page reloading when add button is pressed
+    e.preventDefault();
+    const newItem = this.state.currentItem;
+    //console.log(newItem);
+    if (newItem.text !== "") {
+      const newItems = [...this.state.items, newItem];
+      this.setState({
+        items: newItems,
+        // this is an empty object where the item will be added to, it contains a key to provide unque identification
+        currentItem: {
+          text: '',
+          key: ''
+        }
+      })
+    }
 
-      <Imagge src="https://www.thetopvillas.com/blog/wp-content/uploads/2017/02/Best-beaches-in-Barbados-1140x760.jpg" alt="" width="350px" height="170px" />;
+  }
 
-      <Counter />
+  //function to remove item from list
+  deleteItem(key) {
+    const filteredItems = this.state.items.filter(item => item.key !== key);
+    this.setState({
+      items: filteredItems
+    })
+  }
 
+  // this enables editing of items on the list
+  setUpdate(text, key) {
+    const items = this.state.items;
+    items.map(item => {
+      if (item.key === key) {
+        item.text = text;
+      }
+    })
+    this.setState({
+      items: items
+    })
+  }
+  render() {
+    return (
+      <div className="app" >
+        <form id="to-do" onSubmit={this.addItem}>
+          <input type="text" placeholder="Item" id="item" value={this.state.currentItem.text} onChange={this.handleInput} />
 
+          <Buton type="submit">+</Buton>
+        </form>
+        <List items={this.state.items}
+          deleteItem={this.deleteItem}
+          setUpdate={this.setUpdate} />
+      </div>
 
-    </>
-
-
-  );
-};
+    )
+  };
+}
 
 export default App;
+
