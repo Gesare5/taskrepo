@@ -17,9 +17,8 @@ class App extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    this.setUpdate = this.setUpdate.bind(this);
-  }
 
+  }
   handleInput(e) {
     this.setState({
       currentItem: {
@@ -57,18 +56,7 @@ class App extends React.Component {
     })
   }
 
-  // this enables editing of items on the list
-  setUpdate(text, key) {
-    const items = this.state.items;
-    items.map(item => {
-      if (item.key === key) {
-        item.text = text;
-      }
-    })
-    this.setState({
-      items: items
-    })
-  }
+
   render() {
     return (
       <div className="app" >
@@ -79,12 +67,12 @@ class App extends React.Component {
         </form>
         <List items={this.state.items}
           deleteItem={this.deleteItem}
-          setUpdate={this.setUpdate} />
+        />
       </div>
 
     )
   };
-}
+};
 
 export default App;
 

@@ -8,15 +8,7 @@ function List(props) {
     const listItems = items.map(item => {
         return <div className="list" key={item.key} >
             <p>
-                {/* the item.text is placed within an input element so that it can be edited even after its added to the list */}
-                <input type="text"
-                    id={item.key}
-                    value={item.text}
-                    onChange={
-                        (e) => {
-                            props.setUpdate(e.target.value, item.key)
-                        }
-                    } />
+                {item.text}
                 <span> <button id="delete" onClick={() => props.deleteItem(item.key)}>-</button>
                 </span></p>
         </div>
